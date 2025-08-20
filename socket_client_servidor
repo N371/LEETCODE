@@ -1,0 +1,44 @@
+========================================================================================================================================================
+                                                                    CLIENTE TCP IP
+========================================================================================================================================================
+SERVIDOR
+
+import socket
+
+IP = "127.0.0.1"
+PORT = 9998
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind((IP, PORT))
+server.listen(5)
+print(f"[*] Servidor escutando em {IP}:{PORT}")
+
+while True:
+    client_socket, addr = server.accept()
+    print(f"[*] Conexão aceita de {addr}")
+    
+    request = client_socket.recv(1024)
+    print(f"[*] Recebido: {request.decode('utf-8')}")
+    
+    client_socket.send(b"Mensagem recebida!")
+    client_socket.close()
+
+
+CLIENTE
+
+
+import socket
+
+target_host = "127.0.0.1"
+target_port = 9998
+
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect((target_host, target_port))
+
+# aqui não mandamos HTTP, só texto puro
+client.send(b"Olá servidor, tudo bem?")
+
+response = client.recv(4096)
+print(f"Resposta: {response.decode('utf-8')}")
+
+client.close()
