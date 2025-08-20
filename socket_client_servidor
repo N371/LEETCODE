@@ -29,16 +29,17 @@ CLIENTE
 
 import socket
 
-target_host = "127.0.0.1"
+target_host = "127.0.0.1"  # substitua pelo IP do servidor se for outro container
 target_port = 9998
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect((target_host, target_port))
 
-# aqui não mandamos HTTP, só texto puro
-client.send(b"Olá servidor, tudo bem?")
+# enviar texto codificado em UTF-8
+client.send("Olá servidor, tudo bem?".encode('utf-8'))
 
 response = client.recv(4096)
 print(f"Resposta: {response.decode('utf-8')}")
 
 client.close()
+
