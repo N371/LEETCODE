@@ -1,0 +1,45 @@
+desafio 1
+
+
+#include <vector>
+#include <iostream>
+using namespace std;
+
+int searchOne(const vector<int>& num) {
+    int left = 0;
+    int right = num.size() - 1;
+
+    while (left <= right) {
+        int middle = left + (right - left) / 2;
+
+        if (num[middle] == 1) {
+            return middle; // encontrou
+        }
+
+
+        if (num[left] <= num[middle]) {
+            if (num[left] <= 1 && 1 < num[middle]) {
+                right = middle - 1;
+            } else {
+                left = middle + 1;
+            }
+        } 
+  
+        else {
+            if (num[middle] < 1 && 1 <= num[right]) {
+                left = middle + 1;
+            } else {
+                right = middle - 1;
+            }
+        }
+    }
+
+    return -1;
+}
+
+int main() {
+    vector<int> arr = {4, 5, 6, 1, 2, 3};
+    cout << "Index of 1: " << searchOne(arr) << endl;
+    return 0;
+}
+===========================================================================================================================================================================================
