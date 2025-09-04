@@ -43,3 +43,52 @@ int main() {
     return 0;
 }
 ===========================================================================================================================================================================================
+
+
+desafio 2
+
+#include <vector>
+using namespace std;
+
+vector<int> targetClosest(vector<int>& num, int target) {
+    int l = num.size();
+    int left = 0;
+    int right = l - 1;
+
+    while(left <= right) {
+        int middle = left + (right - left) / 2;
+
+        if(num[middle] == target) {
+           
+            int esquerda = middle;
+            while(esquerda >= 0 && num[esquerda] == target) {
+                esquerda--;
+            }
+            int direita = middle;
+            while(direita < l && num[direita] == target) {
+                direita++;
+            }
+            return {esquerda + 1, direita - 1};
+        }
+
+       
+        if(num[left] <= num[middle]) { 
+            if(num[left] <= target && target < num[middle]) {
+                right = middle - 1;
+            } else {
+                left = middle + 1;
+            }
+        } else {
+            if(num[middle] < target && target <= num[right]) {
+                left = middle + 1;
+            } else {
+                right = middle - 1;
+            }
+        }
+    }
+
+    return {-1, -1}; 
+}
+
+
+=====================================================================================================================================
